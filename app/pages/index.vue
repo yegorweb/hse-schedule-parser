@@ -180,6 +180,7 @@ useHead({
               variant="outlined"
               density="comfortable"
               auto-select-first
+              autocomplete="off"
               hide-details
             />
 
