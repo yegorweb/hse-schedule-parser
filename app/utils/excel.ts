@@ -33,6 +33,7 @@ interface Lesson {
   building?: string;
   explicitDates: string[];
   startsFrom?: string;
+  part?: number;
   sheet: string;
   cell: string;
 }
@@ -120,7 +121,7 @@ function parseDayMonth(value: string, year: number): Date | undefined {
   return parseDate(Number(match[1]), Number(match[2]), year);
 }
 
-function parseLesson(raw: string) {
+function parseLessonBlock(raw: string) {
   let text = normalize(raw);
 
   // "с 09.11." — дата начала регулярных занятий,
@@ -168,6 +169,15 @@ function parseLesson(raw: string) {
     explicitDates: [...new Set(explicitDates)],
     startsFrom,
   };
+}
+
+function parseLesson(raw: string) {
+  const blocks = normalize(raw)
+    .split(/\n\s*\n+/)
+    .map((block) => block.trim())
+    .filter(Boolean);
+
+  return blocks.map((block) => parseLessonBlock(block));
 }
 
 /**
@@ -357,38 +367,42 @@ function collectLessons(
 
       if (!raw || raw === '-' || raw === '—') continue;
 
-      const parsed = parseLesson(raw);
-
-      if (/занятия проводятся по расписанию дисциплины/i.test(parsed.subject)) {
-        continue;
-      }
-
-      if (!parsed.subject) {
-        warnings.push(`${sheet.name}!${cell.address}: не удалось определить предмет.`);
-        continue;
-      }
-
       const mergedEndRow = getMergedEndRow(sheet, row, groupCol);
       const mergedEndTime = normalize(
         cellText(sheet.getCell(mergedEndRow, 3).value),
       ).match(TIME_RE);
+      const lessonWeekday = weekday;
 
-      lessons.push({
-        group: selectedGroup,
-        subject: parsed.subject,
-        teacher: parsed.teacher,
-        weekday,
-        startTime: timeMatch[1] as any,
-        endTime:
-          mergedEndRow > row && mergedEndTime
-            ? mergedEndTime[2] as any
-            : timeMatch[2],
-        room: normalizeRoom(cellText(sheet.getCell(row, groupCol + 1).value)),
-        building: normalizeRoom(cellText(sheet.getCell(row, groupCol + 2).value)),
-        explicitDates: parsed.explicitDates,
-        startsFrom: parsed.startsFrom,
-        sheet: sheet.name,
-        cell: cell.address,
+      const parsedLessons = parseLesson(raw);
+
+      parsedLessons.forEach((parsed, index) => {
+        if (/занятия проводятся по расписанию дисциплины/i.test(parsed.subject)) {
+          return;
+        }
+
+        if (!parsed.subject) {
+          warnings.push(`${sheet.name}!${cell.address}: не удалось определить предмет.`);
+          return;
+        }
+
+        lessons.push({
+          group: selectedGroup,
+          subject: parsed.subject,
+          teacher: parsed.teacher,
+          weekday: lessonWeekday,
+          startTime: timeMatch[1] as any,
+          endTime:
+            mergedEndRow > row && mergedEndTime
+              ? mergedEndTime[2] as any
+              : timeMatch[2],
+          room: normalizeRoom(cellText(sheet.getCell(row, groupCol + 1).value)),
+          building: normalizeRoom(cellText(sheet.getCell(row, groupCol + 2).value)),
+          explicitDates: parsed.explicitDates,
+          startsFrom: parsed.startsFrom,
+          part: parsedLessons.length > 1 ? index + 1 : undefined,
+          sheet: sheet.name,
+          cell: cell.address,
+        });
       });
 
       if (mergedEndRow > row) row = mergedEndRow;
@@ -459,7 +473,7 @@ function expandLesson(
       .join('\n');
 
     return {
-      uid: `${lesson.sheet}-${lesson.cell}-${formatDate(date)}-${lesson.group}@hse-timetable`,
+      uid: `${lesson.sheet}-${lesson.cell}${lesson.part ? `-${lesson.part}` : ''}-${formatDate(date)}-${lesson.group}@hse-timetable`,
       group: lesson.group,
       subject: lesson.subject,
       teacher: lesson.teacher,
