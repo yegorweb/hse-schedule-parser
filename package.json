@@ -6,6 +6,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
+    "deploy:pages": "node scripts/deploy-pages.mjs",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },

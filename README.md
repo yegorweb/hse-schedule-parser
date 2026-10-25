@@ -27,6 +27,16 @@ npm i
 npm run dev
 ```
 
+# Публикация на GitHub Pages
+
+```shell
+npm run deploy:pages
+```
+
+Команда запускает `nuxt generate` и публикует содержимое `.output/public` в корень ветки `pages`. Для проверки без отправки в GitHub используйте `npm run deploy:pages -- --dry-run`.
+
+Скрипт создаёт отдельный корневой коммит, содержащий только статическую сборку, и заменяет историю ветки `pages` при каждой публикации. В настройках репозитория откройте **Settings → Pages** и выберите источник **Deploy from a branch**, ветку `pages` и папку `/(root)`.
+
 # Важные моменты
 
 ### Auth store
