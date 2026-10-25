@@ -1,29 +1,22 @@
 <script setup lang="ts">
 useHead({
-  titleTemplate: (titleChunk) => {
-    return titleChunk ? `${titleChunk} – Сайт` : 'Сайт'
-  },
+  titleTemplate: (titleChunk) => titleChunk || 'Расписание ВШЭ в календаре',
   link: [
     {
       rel: "icon",
       type: "image/svg+xml",
-      href: "/logo.svg",
+      href: `${useRuntimeConfig().app.baseURL}logo.svg`,
     },
   ],
 })
 
 useSeoMeta({
-  description: 'Описание',
-  ogTitle: 'Сайт',
-  ogDescription: 'Описание',
-  ogImage: 'https://site.com/og-image.jpg',
-  ogUrl: 'https://site.com/',
-  ogLocale: 'ru-RU',
-  twitterTitle: 'Сайт',
-  twitterDescription: 'Описание',
-  twitterImage: 'https://site.com/og-image.jpg',
+  description: 'Бесплатный конвертер расписания НИУ ВШЭ из Excel в календарь ICS. Выберите файл .xlsx и учебную группу — обработка происходит прямо в браузере.',
+  ogSiteName: 'Расписание ВШЭ в календаре',
+  ogUrl: 'https://yegorweb.github.io/hse-schedule-parser/',
+  ogLocale: 'ru_RU',
   twitterCard: 'summary',
-  applicationName: 'Сайт',
+  applicationName: 'Расписание ВШЭ в календаре',
 })
 </script>
 

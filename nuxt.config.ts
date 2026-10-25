@@ -1,6 +1,22 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
+  app: {
+    baseURL: import.meta.env.NODE_ENV === 'production' ? '/hse-schedule-parser/' : '/',
+    head: {
+      htmlAttrs: {
+        lang: 'ru'
+      },
+    }
+  },
+  site: {
+    url: 'https://yegorweb.github.io',
+    name: 'Расписание ВШЭ в календаре',
+  },
+  sitemap: {
+    excludeAppSources: true,
+    urls: ['https://yegorweb.github.io/hse-schedule-parser/'],
+  },
   devtools: { enabled: true },
   modules: ['@nuxtjs/robots', '@nuxtjs/sitemap', 'vuetify-nuxt-module', 'nuxt-svgo'],
 
@@ -13,24 +29,8 @@ export default defineNuxtConfig({
     },
   },
 
-  app: {
-    head: {
-      htmlAttrs: {
-        lang: 'ru'
-      },
-      link: [
-        { rel: 'icon', href: '/favicon.ico' },
-      ]
-    }
-  },
-
   robots: {
-    groups: [
-      { 
-        userAgent: '*', 
-        allow: '/'
-      },
-    ]
+    robotsTxt: false,
   },
 
   features: {
