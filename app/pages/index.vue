@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { mdiAccountGroupOutline, mdiClose, mdiDownload } from '@mdi/js';
+
 const file = ref<File | undefined>(undefined);
 const groups = ref<string[]>([]);
 const selectedGroup = ref<string | null>(null);
@@ -135,7 +137,7 @@ useHead({
             <v-btn
               v-if="file"
               class="reset-button"
-              icon="mdi-close"
+              :icon="mdiClose"
               aria-label="Выбрать другой файл"
               variant="text"
               @click="resetFile"
@@ -176,7 +178,7 @@ useHead({
               :items="groups"
               label="Учебная группа"
               placeholder="Например, КНТ..."
-              prepend-inner-icon="mdi-account-group-outline"
+              :prepend-inner-icon="mdiAccountGroupOutline"
               variant="outlined"
               density="comfortable"
               auto-select-first
@@ -187,7 +189,7 @@ useHead({
             <v-btn
               class="download-button"
               color="primary"
-              prepend-icon="mdi-calendar-arrow-down"
+              :prepend-icon="mdiDownload"
               size="large"
               :disabled="!selectedGroup"
               :loading="isGenerating"
