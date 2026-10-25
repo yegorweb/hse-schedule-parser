@@ -1,0 +1,16 @@
+html,
+body,
+#__nuxt {
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  background: #0b1020;
+  font-family: Inter, "Segoe UI", sans-serif;
+}
+
+::selection {
+  background: rgba(74, 127, 230, 0.45);
+}

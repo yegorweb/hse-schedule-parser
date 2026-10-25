@@ -8,12 +8,18 @@ export default defineVuetifyConfiguration({
     messages: { ru }
   },
   theme: {
-    defaultTheme: 'light',
+    defaultTheme: 'dark',
     themes: {
-      light: {
+      dark: {
+        dark: true,
         colors: {
-          primary: '#27384b',
-          accent: '#e76f51'
+          background: '#0b1020',
+          surface: '#141d2e',
+          primary: '#002f87',
+          secondary: '#4a7fe6',
+          'on-background': '#ffffff',
+          'on-surface': '#ffffff',
+          'on-surface-variant': '#ffffff',
         },
       }
     }
