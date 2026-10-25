@@ -134,14 +134,14 @@ useHead({
             <div>
               <h2>Загрузите расписание .xlsx</h2>
             </div>
-            <v-btn
+            <!-- <v-btn
               v-if="file"
               class="reset-button"
               :icon="mdiClose"
               aria-label="Выбрать другой файл"
               variant="text"
               @click="resetFile"
-            />
+            /> -->
           </div>
 
           <v-file-upload
