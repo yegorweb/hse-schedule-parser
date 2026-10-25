@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { mdiGithub } from '@mdi/js'
 import Logo from '~/assets/images/logo.svg'
 </script>
 
@@ -10,6 +11,15 @@ import Logo from '~/assets/images/logo.svg'
           <Logo class="brand-logo" />
           <span>Конвертер расписания ВШЭ</span>
         </NuxtLink>
+        <v-btn
+          class="github-button"
+          :icon="mdiGithub"
+          href="https://github.com/yegorweb/hse-schedule-parser"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Открыть репозиторий на GitHub"
+          variant="text"
+        />
       </v-container>
     </header>
 
@@ -48,5 +58,9 @@ import Logo from '~/assets/images/logo.svg'
 .brand-logo {
   width: 35px;
   height: 35px;
+}
+
+.github-button {
+  color: #fff;
 }
 </style>
