@@ -152,6 +152,8 @@ useHead({
             subtitle="или выберите файл .xlsx"
             accept=".xlsx"
             filter-by-type=".xlsx"
+            inset-file-list
+            show-size
             clearable
             hide-browse
             @rejected="onRejected"
