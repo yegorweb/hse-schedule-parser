@@ -1,46 +1,52 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import Logo from '~/assets/images/logo.svg'
 </script>
 
 <template>
-  <div class="header">
-    <v-container class="d-flex align-center justify-space-between pt-0 pb-0"
-      style="height: 60px; position: relative;">
-      <div @click="navigateTo('/')" class="d-flex flex-row justify-center align-center cursor-pointer logo h-100">
-        <Logo class="logo-img" />
+  <div class="site-layout">
+    <header class="site-header">
+      <v-container class="header-content">
+        <NuxtLink class="brand" to="/">
+          <Logo class="brand-logo" />
+          <span>Конвертер расписания ВШЭ</span>
+        </NuxtLink>
+      </v-container>
+    </header>
 
-        <div class="font-weight-bold" style="font-size: 22px; margin-left: 13px;">Сайт</div>
-      </div>
-    </v-container>
+    <NuxtPage />
   </div>
-
-  <NuxtPage />
-
-  <v-spacer />
-
-  <footer>
-    <v-container>
-      Футер
-    </v-container>
-  </footer>
 </template>
 
-<style lang="postcss" scoped>
-.logo,
-.logo * {
-  user-select: none;
+<style lang="scss" scoped>
+.site-layout {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
-.logo-img {
-  height: 40px;
+.site-header {
+  height: 60px;
 }
 
-.header {
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 999;
-  transition: all .15s;
+.header-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.brand-logo {
+  width: 35px;
+  height: 35px;
 }
 </style>
